@@ -117,15 +117,3 @@ QSqlQueryModel *Avion::rechercher(QString id)
         model->setQuery("select * from AVION where ID LIKE '"+id+"' ");
     return model;
 }
-QSqlQueryModel * Avion::statistic()
-{
-    QSqlQueryModel * model=new QSqlQueryModel();
-       model->setQuery("select ID,(count(ID)*100/ (select count(*)from AVION)) as pourcentage from AVION group by ID");
-       model->setHeaderData(0,Qt::Horizontal,QObject::tr("ID"));
-       model->setHeaderData(1,Qt::Horizontal,QObject::tr("percentage"));
-       return model;
-
-
-}
-
-

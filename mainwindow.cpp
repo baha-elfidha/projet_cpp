@@ -1,34 +1,25 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include"avion.h"
 #include<QIntValidator>
 #include <QMessageBox>
 #include<QRegExp>
 #include <QPdfWriter>
 #include <QPainter>
-#include <QPrinter>
-#include <QPrintDialog>
+//#include <QPrinter>
+//#include <QPrintDialog>
 #include <QTextDocument>
 #include <QTextStream>
 #include <QSqlQuery>
-#include <QTextTableFormat>
-#include <QStandardItemModel>
-#include <QDialog>
-#include <QFileDialog>
-#include <QMediaPlayer>
-#include <QVideoWidget>
-#include <QDesktopWidget>
-#include <QSettings>
-#include <QTextStream>
-#include <QFile>
-#include <QDataStream>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
      ui->tab_avion->setModel(a.afficher());
-  ui->le_id->setValidator  (new QIntValidator(001,99999,this));
+
+     ui->le_id->setValidator  (new QIntValidator(001,99999,this));
   ui->la_marque->setMaxLength(8);
   ui->le_modele->setMaxLength(10);
    ui->le_kil->setValidator  (new QIntValidator(001,9999999,this));
@@ -51,15 +42,57 @@ MainWindow::MainWindow(QWidget *parent) :
           ui->id_supp->setModel(a.get_id());
             ui->id_modd->setModel(a.get_id());
 
+            //maps
+            QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+                               QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
+            ui->WebBrowser->dynamicCall("Navigate(const QString&)", "https://www.google.com/maps/place/ESPRIT/@36.9016729,10.1713215,15z");
+
+            int ret=A.connect_arduino(); // lancer la connexion à arduino
+                    switch(ret){
+                    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+                        break;
+                    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+                       break;
+                    case(-1):qDebug() << "arduino is not available";
+                    }
+                     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+                     //le slot update_label suite à la reception du signal readyRead (reception des données).
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    player->stop();
+    vw->close();
 }
+void MainWindow::update_label()
+{
+ data="";
 
+while((A.getdata().size()<5))
+{
+    QString key;
+data=A.read_from_arduino();
+
+break;
+
+}
+if(data!=""){
+if(data.toInt()!=0)
+{int D=data.toInt();
+    qDebug() << D ;
+    if(A.cherchercode(D)!=-1)
+    {A.write_to_arduino("1");
+       }
+    else
+    {   A.write_to_arduino("0");}
+
+
+}}
+data="";
+}
 void MainWindow::on_pb_ajouter_clicked()
 {
     int id=ui->le_id->text().toInt();
@@ -191,8 +224,6 @@ void MainWindow::on_pb_rech_mod_clicked()
 }
 
 
-
-
 void MainWindow::on_pdf_clicked()
 {
 QString strStream;
@@ -238,9 +269,6 @@ QString strStream;
         QTextDocument *document = new QTextDocument();
         document->setHtml(strStream);
 
-
-        //QTextDocument document;
-        //document.setHtml(html);
         QPrinter printer(QPrinter::PrinterResolution);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName("avion.pdf");
@@ -249,8 +277,48 @@ QString strStream;
 
 
 
+
 void MainWindow::on_pb_tri_desc_clicked()
 {
     ui->tab_avion->setModel(a.tri_desc());
 
 }
+
+void MainWindow::on_start_vid_clicked()
+{
+    player= new QMediaPlayer;
+    vw=new QVideoWidget;
+
+    auto filename=QFileDialog::getOpenFileName(this,"import mp4 file",QDir::rootPath(),"Excel Files(*.mp4)");
+
+
+    player->setVideoOutput(vw);
+    player->setMedia(QUrl::fromLocalFile(filename));
+    vw->setGeometry(500,500,500,500);
+    vw->show();
+    player->play();
+}
+
+void MainWindow::on_stop_vid_clicked()
+{
+    player->stop();
+    vw->close();
+}
+
+void MainWindow::on_pause_vid_clicked()
+{
+    player->pause();
+}
+
+
+void MainWindow::on_continue_2_clicked()
+{
+       emit player->play();
+}
+void MainWindow::on_stat_clicked()
+{
+    stat=new stat_combo();
+    stat->choix_pie();
+    stat->show();
+}
+

@@ -4,12 +4,13 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql network multimedia multimediawidgets charts printsupport widgets axcontainer
+QT       += core gui sql network multimedia multimediawidgets charts printsupport widgets axcontainer serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
+QT += serialport
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -25,18 +26,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    arduino.cpp \
     avion.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    stat_combo.cpp
 
 HEADERS += \
+    arduino.h \
     avion.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    stat_combo.h \
+    webaxwidget.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        stat_combo.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1296</width>
-    <height>657</height>
+    <width>1759</width>
+    <height>904</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>320</x>
       <y>0</y>
-      <width>1511</width>
-      <height>871</height>
+      <width>1001</width>
+      <height>591</height>
      </rect>
     </property>
     <property name="font">
@@ -289,7 +289,7 @@ background-color: rgb(189, 189, 189);</string>
         <x>-5</x>
         <y>1</y>
         <width>1001</width>
-        <height>551</height>
+        <height>581</height>
        </rect>
       </property>
      </widget>
@@ -317,7 +317,7 @@ background-color: rgb(189, 189, 189);</string>
        <rect>
         <x>25</x>
         <y>101</y>
-        <width>861</width>
+        <width>811</width>
         <height>371</height>
        </rect>
       </property>
@@ -325,8 +325,8 @@ background-color: rgb(189, 189, 189);</string>
      <widget class="QPushButton" name="pb_afficher">
       <property name="geometry">
        <rect>
-        <x>780</x>
-        <y>420</y>
+        <x>760</x>
+        <y>470</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -338,8 +338,8 @@ background-color: rgb(189, 189, 189);</string>
      <widget class="QPushButton" name="pb_tri">
       <property name="geometry">
        <rect>
-        <x>710</x>
-        <y>420</y>
+        <x>690</x>
+        <y>470</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -351,14 +351,40 @@ background-color: rgb(189, 189, 189);</string>
      <widget class="QPushButton" name="pb_tri_desc">
       <property name="geometry">
        <rect>
-        <x>640</x>
-        <y>420</y>
+        <x>620</x>
+        <y>470</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
        <string>tri_desc</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="stat">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>470</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>stat</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pdf">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>470</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>pdf</string>
       </property>
      </widget>
     </widget>
@@ -558,7 +584,7 @@ background-color: rgb(189, 189, 189);</string>
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>420</y>
         <width>161</width>
         <height>31</height>
@@ -602,7 +628,7 @@ background-color: rgb(189, 189, 189);</string>
      <widget class="QLabel" name="label_16">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>280</y>
         <width>161</width>
         <height>31</height>
@@ -620,7 +646,7 @@ background-color: rgb(189, 189, 189);</string>
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>350</y>
         <width>161</width>
         <height>31</height>
@@ -668,45 +694,17 @@ background-color: rgb(189, 189, 189);</string>
        <string>rechercher</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pdf">
+     <widget class="QLabel" name="labell">
       <property name="geometry">
        <rect>
-        <x>810</x>
-        <y>440</y>
-        <width>75</width>
-        <height>23</height>
+        <x>520</x>
+        <y>50</y>
+        <width>47</width>
+        <height>14</height>
        </rect>
       </property>
       <property name="text">
-       <string>pdf</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_12">
-     <attribute name="title">
-      <string>Rechercher</string>
-     </attribute>
-     <widget class="QTableView" name="tab_rech">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>80</y>
-        <width>861</width>
-        <height>371</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="rech">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>10</y>
-        <width>271</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(170, 170, 170);</string>
+       <string>TextLabel</string>
       </property>
      </widget>
     </widget>
@@ -774,11 +772,94 @@ border: none;
        <string>Envoyer</string>
       </property>
      </widget>
+     <widget class="WebAxWidget" name="WebBrowser">
+      <property name="control" stdset="0">
+       <string>{8856F961-340A-11D0-A96B-00C04FD705A2}</string>
+      </property>
+      <property name="focusPolicy" stdset="0">
+       <enum>Qt::StrongFocus</enum>
+      </property>
+      <property name="geometry" stdset="0">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>821</width>
+        <height>561</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab_14">
+    <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Statistiques</string>
+      <string>video</string>
      </attribute>
+     <widget class="QPushButton" name="start_vid">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>240</y>
+        <width>211</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>start video</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="stop_vid">
+      <property name="geometry">
+       <rect>
+        <x>392</x>
+        <y>240</y>
+        <width>221</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>stop video</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pause_vid">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>240</y>
+        <width>221</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>pause</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="continue_2">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>380</y>
+        <width>251</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>continue</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_5">
+      <property name="geometry">
+       <rect>
+        <x>-5</x>
+        <y>1</y>
+        <width>851</width>
+        <height>581</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>textBrowser_5</zorder>
+     <zorder>start_vid</zorder>
+     <zorder>stop_vid</zorder>
+     <zorder>pause_vid</zorder>
+     <zorder>continue_2</zorder>
     </widget>
    </widget>
    <widget class="QFrame" name="frame">
@@ -787,7 +868,7 @@ border: none;
       <x>-10</x>
       <y>0</y>
       <width>341</width>
-      <height>621</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -877,7 +958,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/employe.png</pixmap>
+      <pixmap>../../Downloads/employe.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -927,7 +1008,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/valise.png</pixmap>
+      <pixmap>../../Downloads/valise.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -977,7 +1058,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/voyageur-avec-une-valise.png</pixmap>
+      <pixmap>../../Downloads/voyageur-avec-une-valise.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1027,7 +1108,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/avion.png</pixmap>
+      <pixmap>../../Downloads/avion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1127,7 +1208,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/flying.png</pixmap>
+      <pixmap>../../Downloads/flying.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1146,7 +1227,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/aa.png</pixmap>
+      <pixmap>../../Downloads/aa.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1165,7 +1246,7 @@ text-align: left;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../gestion_avion/home.png</pixmap>
+      <pixmap>../../Downloads/home.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1178,7 +1259,7 @@ text-align: left;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1296</width>
+     <width>1759</width>
      <height>22</height>
     </rect>
    </property>
@@ -1193,6 +1274,18 @@ text-align: left;
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QAxWidget</class>
+   <extends>QWidget</extends>
+   <header>qaxwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WebAxWidget</class>
+   <extends>QAxWidget</extends>
+   <header>webaxwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
