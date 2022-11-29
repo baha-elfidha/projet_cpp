@@ -266,13 +266,17 @@ void Employe::exportpdf(){
     QPdfWriter pdf("D:/New folder/employe.pdf");
 
        QPainter painter(&pdf);
+       QImage image("C:/Users/Ahmed/Downloads/logo.png");
+      const QPoint imageCoordinates(100,100);
 
+
+      painter.drawImage(imageCoordinates, image);
 
       painter.setPen(Qt::red);
-      painter.setFont(QFont("Arial", 50));
-      painter.drawText(4000,1500,"LISTE DES EMPLOYES");
+      painter.setFont(QFont("Arial", 30));
+      painter.drawText(3000,1500,"LISTE DES EMPLOYES");
 
-      painter.drawRect(3800,1200,1700,500);
+      //painter.drawRect(3800,1200,1700,500);
       painter.drawRect(0,3000,9600,500);
       painter.setPen(Qt::red);
       painter.setFont(QFont("Arial", 11));

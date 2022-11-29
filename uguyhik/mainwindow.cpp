@@ -142,7 +142,7 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
 {
     QString name=ui->comboBox->currentText();
-    //ui->comboBox->setModel(e.afficher_cin());
+    ui->comboBox->setModel(e.afficher_cin());
     QSqlQuery query;
     query.prepare("select * from employe where cin='"+name+"'");
     if (query.exec()){

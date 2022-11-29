@@ -34,8 +34,6 @@ void Login::on_pushButton_clicked()
          QMessageBox::critical(nullptr, QObject::tr("NOT OK"),
                      QObject::tr("ACCES IMPOSSIBLE."), QMessageBox::Cancel);
 
-
-
      }
 
 
