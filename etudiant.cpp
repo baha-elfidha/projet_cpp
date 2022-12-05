@@ -11,20 +11,20 @@
 
 Vols::Vols()
 {
-id_vol=0;
+id=0;
 horaire="";destination="";nombre_vg="";
 }
 
-Vols::Vols(int id_vol,QString horaire,QString destination,QString nombre_vg)
+Vols::Vols(int id,QString horaire,QString destination,QString nombre_vg)
 {
-    this->id_vol=id_vol;
+    this->id=id;
     this->horaire=horaire;
     this->destination=destination;
     this->nombre_vg=nombre_vg;
 }
 int Vols::getid()
 {
-    return id_vol;
+    return id;
 };
 QString Vols::gethoraire()
 {
@@ -38,17 +38,17 @@ QString Vols::getnombre_vg()
 {
     return nombre_vg;
 }
-void Vols::setid(int id_vol)
+void Vols::setid(int id)
 {
-    this->id_vol=id_vol;
+    this->id=id;
 
 }
 void Vols::sethoraire(QString horaire){this->horaire=horaire;}
 void Vols::setdestination(QString destination){this->destination=destination;}
 void Vols::setnombre_vg(QString nombre_vg){this->nombre_vg=nombre_vg;}
-bool Vols::ajouter_vol()
+bool Vols::ajouter()
 {
-    QString id_string=QString::number(id_vol);
+    QString id_string=QString::number(id);
     QSqlQuery query;
           query.prepare("INSERT INTO VOLS (HORAIRE,DESTINATION,NOMBRE_VG,id) "
                         "VALUES (:HORAIRE, :DESTINATION, :NOMBRE_VG,:id)");
@@ -64,7 +64,7 @@ bool Vols::ajouter_vol()
 }
 
 
-QSqlQueryModel * Vols::afficher_vol()
+QSqlQueryModel * Vols::afficher()
 {
     QSqlQueryModel * model = new QSqlQueryModel();
     model->setQuery("SELECT * FROM VOLS");
@@ -77,7 +77,7 @@ QSqlQueryModel * Vols::afficher_vol()
     return model;
 }
 
-bool Vols::supprimer_vol(int id){
+bool Vols::supprimer(int id){
     QSqlQuery query;
 
 
@@ -88,13 +88,13 @@ bool Vols::supprimer_vol(int id){
 
 }
 
-bool Vols::modifier_vol(int modifid){
+bool Vols::modifier(int modifid){
     QSqlQuery query;
     //requette sql
     query.prepare("UPDATE VOLS SET HORAIRE=:horaire,DESTINATION=:destination,NOMBRE_VG=:nombre_vg,ID=:nvId WHERE ID=:modifid");
 
     //saisir de donnee
-    query.bindValue(":nvId",id_vol);
+    query.bindValue(":nvId",id);
     query.bindValue(":modifid",modifid);
     query.bindValue(":horaire",horaire);
     query.bindValue(":destination",destination);
@@ -105,14 +105,14 @@ bool Vols::modifier_vol(int modifid){
     return query.exec();
 }
 
-QSqlQueryModel * Vols::chercher_vol(QString horraire,QString destination,int id_vol)
+QSqlQueryModel * Vols::chercher(QString horraire,QString destination,int ID)
 {
     QSqlQueryModel * model=new QSqlQueryModel();
     QSqlQuery query;
     query.prepare("SELECT * from personnel where horraire like :horraire OR destination like :destination OR ID like :ID ");
     query.bindValue(":horraire",horraire);
     query.bindValue(":destination",destination);
-    query.bindValue(":ID",id_vol);
+    query.bindValue(":ID",ID);
 
     query.exec();
     model->setQuery(query);
@@ -126,7 +126,7 @@ QSqlQueryModel * Vols::chercher_vol(QString horraire,QString destination,int id_
     return model;
 }
 
-QSqlQueryModel* Vols::trie_vol()
+QSqlQueryModel* Vols::trie()
 {
     QSqlQueryModel* model = new QSqlQueryModel();
 
@@ -141,7 +141,7 @@ QSqlQueryModel* Vols::trie_vol()
     return model;
 }
 
-QSqlQueryModel* Vols::trie_nombre_vg_vol()
+QSqlQueryModel* Vols::trie_nombre_vg()
 {
     QSqlQueryModel* model = new QSqlQueryModel();
 
@@ -156,7 +156,7 @@ QSqlQueryModel* Vols::trie_nombre_vg_vol()
 }
 
 
-void Vols::pdfprinter_vol(){
+void Vols::pdfprinter(){
 
 QPdfWriter pdf("C:/Users/bahae/Downloads/Atelier_Connexion/vols.pdf");
 

@@ -15,20 +15,20 @@ public:
     void sethoraire(QString);
     void setdestination(QString);
     void setnombre_vg(QString);
-    bool ajouter_vol();
-    QSqlQueryModel* afficher_vol();
-    bool supprimer_vol(int);
-    bool modifier_vol(int modifid);
-    QSqlQueryModel* chercher_vol(QString, QString,int);
-    QSqlQueryModel* trie_vol();
-    QSqlQueryModel* trie_nombre_vg_vol();
+    bool ajouter();
+    QSqlQueryModel* afficher();
+    bool supprimer(int);
+    bool modifier(int modifid);
+    QSqlQueryModel* chercher(QString horaire, QString destination, int ID );
+    QSqlQueryModel* trie();
+    QSqlQueryModel* trie_nombre_vg();
 
-    void pdfprinter_vol();
+    void pdfprinter();
 
 private:
 
     QString horaire,destination,nombre_vg;
-    int id_vol;
+    int id;
 };
 
 #endif // ETUDIANT_H

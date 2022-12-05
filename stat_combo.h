@@ -2,7 +2,6 @@
 #define STAT_COMBO_H
 
 #include <QDialog>
-
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -35,7 +34,6 @@ public:
     QChartView *chartView ;
     void choix_bar();
     void choix_pie();
-     void choix_pie_vol();
 
 private:
     Ui::stat_combo *ui;
