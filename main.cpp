@@ -1,8 +1,9 @@
 #include "mainwindow.h"
-
 #include <QApplication>
 #include <QMessageBox>
 #include "connection.h"
+#include <QFile>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -10,11 +11,16 @@ int main(int argc, char *argv[])
 
     Connection c;
     bool test=c.createconnect();
+
     if(test)
-    {w.show();
-        int x=w.width();
-        int y=w.height();
-        w.setFixedSize(x,y);
+    { w.show();
+    // int x=w.width();
+      //  int y=w.height();
+
+
+
+      w.setFixedSize(1198,602);
+
         QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);

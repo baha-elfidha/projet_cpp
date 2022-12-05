@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += sql
-
+QT       += serialport
+QT       +=  core gui sql serialport network multimedia multimediawidgets charts printsupport widgets axcontainer
 QT += printsupport
 QT += network
 include(QZXing/QZXing.pri)
@@ -27,16 +28,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    arduino.cpp \
     bagage.cpp \
     connection.cpp \
+    mail.cpp \
     main.cpp \
     mainwindow.cpp \
     statistique.cpp \
     video.cpp
 
 HEADERS += \
+    arduino.h \
     bagage.h \
     connection.h \
+    mail.h \
     mainwindow.h \
     statistique.h \
     video.h

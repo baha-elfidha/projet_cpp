@@ -14,26 +14,42 @@
 #include "QZXing.h"
 #include <QGraphicsScene>
 #include <QTextDocument>
+#include <QAbstractSocket>
 #include <QTimer>
 #include <QMovie>
+#include "mail.h"
+#include "arduino.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-//max nombres des bagages 10
-//max poids 35
-//max dimension 158
+    ui->id_m->setModel(Dtmp.affiche_id());
+ ui->idsup->setModel(Dtmp.affiche_id());
+ ui->idre->setModel(Dtmp.affiche_id());
+// read_from_arduino();
 
-    QTimer *t = new QTimer(this);
+
+ int ret=A.connect_arduino(); // lancer la connexion à arduino
+     switch(ret){
+     case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+         break;
+     case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+        break;
+     case(-1):qDebug() << "arduino is not available";
+     }
+      QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
+
+      // Time
+      QTimer *t = new QTimer(this);
     t->setInterval(1000);
     connect(t, &QTimer::timeout, [&]() {
        QString time1 = QTime::currentTime().toString();
        ui->label_clock->setText(time1);
     } );
     t->start();
-
+//gif
     QMovie *movie = new QMovie("C:/Users/4Tnx/Desktop/manager/giphy.gif");
     if (!movie->isValid())
         ui->processLabel->setText(QString("path erreur"));
@@ -45,6 +61,10 @@ else {
          processLabel->setMovie(movie);
     movie->start();}
 
+//controle de saisire
+    //max nombres des bagages 10
+    //max poids 35
+    //max dimension 158
 
     ui->id->setValidator(new QIntValidator(1, 99999999,this));
         ui->nb->setValidator(new QIntValidator(0, 10,this));
@@ -71,8 +91,8 @@ void MainWindow::on_Confirmer_clicked()
     QString type=ui->type_a->currentText();
     float poids=ui->poids->text().toFloat();
     float dimension=ui->dimension->text().toFloat();
-
-    Bagage Dtmp(id,nb,type,poids,dimension);
+QString alerte="";
+    Bagage Dtmp(id,nb,type,poids,dimension,alerte);
     bool valid=true;
    if((Dtmp.Verif_NB_B()==true) or (Dtmp.Verif_DIMENSION()==true) or (Dtmp.Verif_POIDS()==true))
           {
@@ -144,9 +164,10 @@ QString id=ui->id_m->currentText();
 int nb=ui->nb_m->text().toInt();
 QString type=ui->type_m->currentText();
 
+QString alerte="";
 float poids=ui->poids_m->text().toFloat();
 float dimension=ui->dimension_m->text().toFloat();
-  Bagage Dtmp(rech,nb,type,poids,dimension);
+  Bagage Dtmp(rech,nb,type,poids,dimension,alerte);
 bool valid=true;
 if( (Dtmp.Verif_NB_B()==true) or (Dtmp.Verif_DIMENSION()==true) or (Dtmp.Verif_POIDS()==true))
           {
@@ -252,8 +273,8 @@ void MainWindow::on_Annuler_clicked()
     ui->dimension_m->clear();
 }
 void MainWindow::on_Chercher_clicked()
-{QString recherche=ui->idrech->currentText();
-     ui->idrech->setModel(Dtmp.affiche_id());
+{QString recherche=ui->idre->currentText();
+     ui->idre->setModel(Dtmp.affiche_id());
      int rech = recherche.toInt();
 
   ui->tableView->setModel(Dtmp.rechercher(rech));
@@ -324,14 +345,14 @@ void MainWindow::on_pushButton_8_clicked()
                           out <<"<html>\n"
                                 "<head>\n"
                                  "<meta Content=\"Text/html; charset=Windows-1251\">\n"
-
+"<p style='background-image: url('C:/Users/4Tnx/Desktop/manager/images/back.jpg');height: 100%;height: 100%; opacity: 0.5;'>"
                               << "<title> LISTE DES BAGAGES<title>\n "
                               << "</head>\n"
                                  "'<div style='text-align: right;'><img src='C:/Users/4Tnx/Desktop/manager/images/admin.png' width='100'  /></div>\n'</br> </br>'"
                               "<body bgcolor=#ffffff link=#5000A0>\n"
                               "<h1 style=\"border-collapse: collapse;color:#5000A0;margin: 25px 0;font-size: 0.9em;font-family: sans-serif;min-width: 400px;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);\"><strong>Date :       "+TT+" </b> **LISTE DES BAGAGES **   </strong></h1>"
                               "<table style=\"text-align: center; font-size: 22px;color: #128cb5;\" border=1>\n "
-"<p style='background-image: url('C:/Users/4Tnx/Desktop/manager/back.jpg') opacity: 0.5;'>"
+
 
 
                                  ;
@@ -386,17 +407,19 @@ void MainWindow::on_id_m_currentIndexChanged()
               if(qr.exec())  {
             while (qr.next()) {
                 ui->nb_m->setText(qr.value(1).toString());
+
 if ( qr.value(2).toString() == "accessoire personnel" )
     ui->type_m->setCurrentIndex(0);
 if ( qr.value(2).toString() == "bagage cabine" )
     ui->type_m->setCurrentIndex(1);
-if ( qr.value(2).toString() == "bagages en soute" )
+if ( qr.value(2).toString() == "bagage en soute" )
     ui->type_m->setCurrentIndex(2);
 
 
 
                 ui->poids_m->setText(qr.value(3).toString());
                 ui->dimension_m->setText(qr.value(4).toString());
+
             }
         }
     }
@@ -412,17 +435,19 @@ void MainWindow::on_idsup_currentIndexChanged()
 
 void MainWindow::on_idrech_currentIndexChanged()
 {
-    QString recherche=ui->idrech->currentText();
+    QString recherche=ui->idre->currentText();
         int rech = recherche.toInt();
       ui->tableView->setModel(Dtmp.rechercher(rech));
 }
 
-
-
-
 void MainWindow::on_Chercher_3_clicked()
 {
+
      ui->idqr->setModel(Dtmp.affiche_id());
+
+
+
+
 }
 
 void MainWindow::on_idqr_currentIndexChanged()
@@ -487,3 +512,115 @@ void MainWindow::on_pushButton_10_clicked()
     statistique s;
            s.exec();
 }
+
+void MainWindow::update_label()
+{
+  data1=A.read_from_arduino();
+
+    if (data1=="1")
+     {
+
+ui->label_34->clear();
+    ui->label_34->setText("il y a un feu");
+    QDateTime date = QDateTime::currentDateTime();
+    QString formattedTime = date.toString("dd.MM.yyyy hh:mm:ss");
+
+  QString recherche=ui->idqr->currentText();
+  QSqlQuery qr;
+qr.prepare("SELECT * FROM BAGAGE where ID_B LIKE '"+recherche+"'");
+QString type;
+int id,nb;
+float poids,dimension;
+
+        if(qr.exec())  {
+      while (qr.next()) {
+      id = qr.value(0).toInt();
+          nb = qr.value(1).toInt();
+
+           type = qr.value(2).toString();
+           poids = qr.value(3).toFloat();
+            dimension = qr.value(4).toFloat();
+
+      }
+
+  }
+    Bagage Dtmp(id,nb,type,poids,dimension,formattedTime);
+    Dtmp.modifier_b(recherche);
+
+
+             }
+
+    else
+    {    ui->label_34->clear();
+        ui->label_34->setText("il n y a pas de feu");
+
+
+    }
+
+
+
+
+}
+
+
+
+/*
+
+void   MainWindow::sendMail()
+{
+Smtp* smtp = new Smtp("arduino7575@gmail.com","ecosport2", "smtp.gmail.com",465);
+    connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+
+smtp->sendMail("arduino7575@gmail.com","mohamedamin.mekni@esprit.tn","test","tedt");
+}
+void   MainWindow::mailSent(QString status)
+{
+
+    if(status == "Message sent")
+        QMessageBox::warning( nullptr, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+
+}
+    QString ido;
+           string conv;   QByteArray data2;
+           const char *data; QByteArray q_b;
+ui->tableView_3->setModel(Dtmp.mails());
+/*
+QVariant value =ui->tableView_3->model()->data(ui->tableView_3->model()->index(0,0)).toString().simplified();
+QString mail = value.toString();
+ui->label_34->setText(mail);
+
+    data1=A.read_from_arduino();
+    //int t=0;
+    if (data1=="1")
+     {int x = ui->tableView_3->model()->rowCount();
+
+         data2.setNum(x);
+    A.write_to_arduino(data2);
+    ui->label_34->setText("il y a un feu");
+
+      if (data1=="999")
+      {   ui->label_35->setText("En Cours d envoyer les donnés");
+           int t=0;
+           q_b.setNum(t);
+          while (data1!=data2){
+              data1=A.read_from_arduino();
+QVariant value =ui->tableView_3->model()->data(ui->tableView_3->model()->index(t,0)).toString().simplified();
+t++;
+//q_b.setNum(t);
+              ido=value.toString();
+
+                      conv = ido.toStdString();
+                        ui->label_34->setText(ido);
+                      data=conv.c_str();
+                  A.write_to_arduino(data);
+             }
+          ui->label_35->setText("Tous les donneés ont été envoyé");}}
+    else
+    {   ui->label_34->setText("il n y a pas de feu");
+        ui->label_35->clear();
+
+    }
+
+*/
+

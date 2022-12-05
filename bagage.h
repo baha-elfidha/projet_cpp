@@ -12,20 +12,22 @@ class Bagage
     QString TYPE;
 float POIDS;
 float DIMENSION;
-
+QString alerte;
 
 public:
     Bagage();
-    Bagage(int,int,QString,float,float);
+    Bagage(int,int,QString,float,float,QString);
 
     int get_ID_B();
     int get_NB_B();
     QString get_TYPE();
+    QString get_alerte();
     int get_POIDS();
     int get_DIMENSION();
    void set_ID_B(int);
     void set_NB_B(int);
     void set_TYPE(QString);
+    void set_alerte(QString);
     void set_POIDS(float);
     void set_DIMENSION(float);
  bool existe(QString);
@@ -39,6 +41,7 @@ public:
     bool Verif_POIDS();
  bool Verif_ID_B();
  QSqlQueryModel * affiche_id();
+
 
  QSqlQueryModel * rechercher(int);
 

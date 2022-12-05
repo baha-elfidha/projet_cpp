@@ -3,26 +3,28 @@
 Bagage::Bagage()
 {
     ID_B=0;
-    NB_B=0;TYPE="";POIDS=0;DIMENSION=0;
+    NB_B=0;TYPE="";POIDS=0;DIMENSION=0;alerte="";
 }
-Bagage::Bagage(int ID_B,int NB_B,QString TYPE,float POIDS,float DIMENSION)
+Bagage::Bagage(int ID_B,int NB_B,QString TYPE,float POIDS,float DIMENSION,QString alerte)
 {
 this->ID_B=ID_B;
 this->NB_B=NB_B;
 this->TYPE=TYPE;
 this->POIDS=POIDS;
 this->DIMENSION=DIMENSION;
-
+this->alerte=alerte;
 }
 
 int Bagage::get_ID_B(){return ID_B;}
 int Bagage::get_NB_B(){return NB_B;}
 QString Bagage::get_TYPE(){return TYPE;}
+QString Bagage::get_alerte(){return TYPE;}
 int Bagage::get_POIDS(){return POIDS;}
 int Bagage::get_DIMENSION(){return DIMENSION;}
 void Bagage::set_ID_B(int i){ID_B=i;}
 void Bagage::set_NB_B(int m){NB_B=m;}
 void Bagage::set_TYPE(QString t){TYPE=t;}
+void Bagage::set_alerte(QString t){TYPE=t;}
 void Bagage::set_POIDS(float n){POIDS=n;}
 void Bagage::set_DIMENSION(float a){DIMENSION=a;}
 
@@ -34,14 +36,14 @@ bool Bagage::ajouter()
    QString res2=QString::number(NB_B);
    QString res3=QString::number(POIDS);
    QString res4=QString::number(DIMENSION);
-Query.prepare("INSERT INTO bagage (ID_B,NB_B,TYPE,POIDS,DIMENSION)"
-              "values(:ID_B,:NB_B,:TYPE,:POIDS,:DIMENSION)");
+Query.prepare("INSERT INTO bagage (ID_B,NB_B,TYPE,POIDS,DIMENSION,alerte)"
+              "values(:ID_B,:NB_B,:TYPE,:POIDS,:DIMENSION,:alerte)");
    Query.bindValue(":ID_B",res1);
    Query.bindValue(":NB_B",res2);
    Query.bindValue(":TYPE",TYPE);
    Query.bindValue(":POIDS",res3);
    Query.bindValue(":DIMENSION",res4);
-
+Query.bindValue(":alerte",alerte);
 
    return Query.exec();
 }
@@ -63,21 +65,24 @@ QSqlQueryModel * Bagage::afficher()
     model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
     model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
     model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
-
+model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 bool Bagage::modifier_b(QString id)
 {
     QSqlQuery query;
-    int r = id.toInt();
+    QString res1=QString::number(ID_B);
+    QString res2=QString::number(NB_B);
+    QString res3=QString::number(POIDS);
+    QString res4=QString::number(DIMENSION);
 
-query.prepare("UPDATE BAGAGE set NB_B=:NB_B,TYPE=:TYPE,POIDS=:POIDS,DIMENSION=:DIMENSION where ID_B=:ID_B");
-         query.bindValue(":ID_B",r);
-         query.bindValue(":NB_B",NB_B);
+query.prepare("UPDATE BAGAGE set NB_B=:NB_B,TYPE=:TYPE,POIDS=:POIDS,DIMENSION=:DIMENSION,alerte=:alerte where ID_B=:ID_B");
+         query.bindValue(":ID_B",res1);
+         query.bindValue(":NB_B",res2);
          query.bindValue(":TYPE",TYPE);
-         query.bindValue(":POIDS",POIDS);
-         query.bindValue(":DIMENSION",DIMENSION);
-
+         query.bindValue(":POIDS",res3);
+         query.bindValue(":DIMENSION",res4);
+query.bindValue(":alerte",alerte);
 
 
           return query.exec();
@@ -96,7 +101,7 @@ QString recherche=QString::number(id);
     model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
     model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
     model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
-
+ model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 
@@ -147,6 +152,7 @@ QSqlQueryModel * Bagage::Trier_ID_D()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 QSqlQueryModel * Bagage::Trier_ID_A()
@@ -158,6 +164,7 @@ QSqlQueryModel * Bagage::Trier_ID_A()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 
@@ -170,6 +177,7 @@ QSqlQueryModel * Bagage::Trier_NB_D()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 QSqlQueryModel * Bagage::Trier_NB_A()
@@ -181,6 +189,7 @@ QSqlQueryModel * Bagage::Trier_NB_A()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 
@@ -193,6 +202,7 @@ QSqlQueryModel * Bagage::Trier_POIDS_A()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 QSqlQueryModel * Bagage::Trier_POIDS_D()
@@ -204,6 +214,7 @@ QSqlQueryModel * Bagage::Trier_POIDS_D()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 QSqlQueryModel * Bagage::Trier_DIMENSION_A()
@@ -215,6 +226,7 @@ QSqlQueryModel * Bagage::Trier_DIMENSION_A()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 QSqlQueryModel * Bagage::Trier_DIMENSION_D()
@@ -226,6 +238,7 @@ QSqlQueryModel * Bagage::Trier_DIMENSION_D()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 
@@ -238,6 +251,7 @@ QSqlQueryModel * Bagage::Trier_TYPE_A()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
 QSqlQueryModel * Bagage::Trier_TYPE_D()
@@ -249,5 +263,9 @@ QSqlQueryModel * Bagage::Trier_TYPE_D()
    model->setHeaderData(2,Qt::Horizontal,QObject::tr("TYPE"));
    model->setHeaderData(3,Qt::Horizontal,QObject::tr("POIDS"));
    model->setHeaderData(4,Qt::Horizontal,QObject::tr("DIMENSION"));
+   model->setHeaderData(5,Qt::Horizontal,QObject::tr("alerte"));
     return model;
 }
+
+
+

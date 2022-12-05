@@ -7,16 +7,25 @@
 #include "QList"
 #include<iostream>
 #include "QDebug"
-
-
-#include "QDebug"
+#include <QTimer>
+#include <QTime>
+#include<QElapsedTimer >
 using std::to_string;
 using std::string;
 video::video(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::video)
 {
+    QTimer *timer;
+       QTime time;
   ui->setupUi(this);
+  //timer
+  /*
+  time = time.addSecs(-1);
+  ui->timer_2->setText(time.toString("hh:mm:ss"));
+     timer = new QTimer(this);
+     connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+     timer->start();*/
     // create new objects
        mediaPlayer = new QMediaPlayer(this);
        videoWidget = new QVideoWidget(this);
@@ -27,9 +36,6 @@ video::video(QWidget *parent) :
        ui->videoPlayerBox->setLayout(layout);
        mediaPlayer->setVideoOutput(videoWidget);
 
-       // open settings dialog
-       connect(ui->settingsBtn, &QToolButton::clicked, this, &video::settingBtn);
-       connect(ui->actionEdit, &QAction::triggered, this, &video::settingBtn);
 
        // connect the media player and slider:
        // NOTE: need to drag the slider to position instead of clicking
@@ -54,6 +60,12 @@ video::~video()
 }
 void video::setTimeLabel()
 {
+
+       QTime time;
+
+
+
+
     // convert duration into HH:MM:SS format and set the lable
     string timeLbl;
     long milli = mediaPlayer->duration();
@@ -79,7 +91,13 @@ void video::setTimeLabel()
         timeLbl += "0" + to_string(sec);
     }
 
-    ui->timeLabel->setText(QString::fromStdString(timeLbl));
+
+
+    time = time.addSecs(-1);
+       ui->timer_2->setText(time.toString("hh:mm:ss"));
+
+
+ ui->timer->setText(QString::fromStdString(timeLbl));
 
 }
 void video::on_actionOpen_triggered()
@@ -103,7 +121,7 @@ void video::on_actionOpen_triggered()
     connect(mediaPlayer, &QMediaPlayer::durationChanged, this, [&]() {
         setTimeLabel();
     });
-
+setTimeLabel();
     // add the path of the media file to the QMediaPlayer and play
     on_stopBtn_clicked();
     mediaPlayer->setMedia(QUrl::fromLocalFile(name));
@@ -264,46 +282,8 @@ void video::on_actionExit_triggered()
     QApplication::exit(0);
 }
 
-// settings
 
-void video::settingBtn() {
-    settingsDialog = new QDialog();
 
-    brightnessSlider = new QSlider(Qt::Horizontal);
-    brightnessSlider->setRange(-100, 100);
-    brightnessSlider->setValue(videoWidget->brightness());
-    connect(brightnessSlider, &QSlider::sliderMoved, videoWidget, &QVideoWidget::setBrightness);
-    connect(videoWidget, &QVideoWidget::brightnessChanged, brightnessSlider, &QSlider::setValue);
-
-    QSlider *contrastSlider = new QSlider(Qt::Horizontal);
-    contrastSlider->setRange(-100, 100);
-    contrastSlider->setValue(videoWidget->contrast());
-    connect(contrastSlider, &QSlider::sliderMoved, videoWidget, &QVideoWidget::setContrast);
-    connect(videoWidget, &QVideoWidget::contrastChanged, contrastSlider, &QSlider::setValue);
-
-    QSlider *hueSlider = new QSlider(Qt::Horizontal);
-    hueSlider->setRange(-100, 100);
-    hueSlider->setValue(videoWidget->hue());
-    connect(hueSlider, &QSlider::sliderMoved, videoWidget, &QVideoWidget::setHue);
-    connect(videoWidget, &QVideoWidget::hueChanged, hueSlider, &QSlider::setValue);
-
-    QSlider *saturationSlider = new QSlider(Qt::Horizontal);
-    saturationSlider->setRange(-100, 100);
-    saturationSlider->setValue(videoWidget->saturation());
-    connect(saturationSlider, &QSlider::sliderMoved, videoWidget, &QVideoWidget::setSaturation);
-    connect(videoWidget, &QVideoWidget::saturationChanged, saturationSlider, &QSlider::setValue);
-
-    settingsLayout = new QFormLayout();
-    settingsLayout->addRow(tr("Brightness"), brightnessSlider);
-    settingsLayout->addRow(tr("Contrast"), contrastSlider);
-    settingsLayout->addRow(tr("Hue"), hueSlider);
-    settingsLayout->addRow(tr("Saturaation"), saturationSlider);
-
-    settingsDialog->setWindowTitle("Settings");
-    settingsDialog->setLayout(settingsLayout);
-    settingsDialog->show();
-
-}
 
 // playlist
 

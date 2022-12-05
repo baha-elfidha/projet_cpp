@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QRegExp>
 #include <QDate>
+#include "arduino.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,7 +18,7 @@ public:
     ~MainWindow();
 
 private slots:
-
+void update_label();
     void on_Confirmer_clicked();
 
     void on_supprimer_clicked();
@@ -47,9 +48,6 @@ void on_pushButton_8_clicked();
 
 
 
-
-
-
 void on_idsup_currentIndexChanged();
 
 void on_idrech_currentIndexChanged();
@@ -69,11 +67,15 @@ void on_pushButton_11_clicked();
 
 void on_id_m_currentIndexChanged();
 
+
+
 private:
     Ui::MainWindow *ui;
     Bagage Dtmp;
     QByteArray data;
-
+    QByteArray data1;
+    int etat;
+     Arduino A;
 
 };
 #endif // MAINWINDOW_H

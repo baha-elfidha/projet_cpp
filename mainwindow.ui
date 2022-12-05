@@ -50,7 +50,7 @@ border-top-left-radius: 7px;
 border-top-right-radius: 7px;
 min-width: 150px;
 padding: 8px;
-color: #6a1616;
+color: #FFFFFF;
 font-size:16px;
 font-family:Arial, Helvetica, sans-serif;
 }
@@ -78,7 +78,7 @@ QLineEdit {
 }</string>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab_8">
      <attribute name="title">
@@ -102,6 +102,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -133,6 +135,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -812,6 +816,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -843,6 +849,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -984,6 +992,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1028,12 +1038,12 @@ font-family:Arial, Helvetica, sans-serif;
       </item>
       <item>
        <property name="text">
-        <string>bagage cabine </string>
+        <string>bagage cabine</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>bagages en soute</string>
+        <string>bagage en soute</string>
        </property>
       </item>
      </widget>
@@ -1085,6 +1095,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1141,6 +1153,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1290,6 +1304,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1321,6 +1337,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1352,6 +1370,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1383,6 +1403,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1396,7 +1418,7 @@ text-align: left;
        <string>      Reset</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="idrech">
+     <widget class="QComboBox" name="idre">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -1519,6 +1541,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1565,6 +1589,8 @@ font-size:20px;
 font-family:Arial, Helvetica, sans-serif;
 text-align: left;
 border: 1px solid #6a1616;
+ width: 40px;
+     height: 40px;
 }
 QPushButton:hover {
 color:#fff;
@@ -1725,6 +1751,49 @@ color: #008000;</string>
       <property name="styleSheet">
        <string notr="true"> font-size: 14px;
 color: #008000;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>460</y>
+        <width>47</width>
+        <height>14</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Etat :</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>460</y>
+        <width>181</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+ background: #FFFFFF;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_35">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>490</y>
+        <width>47</width>
+        <height>14</height>
+       </rect>
       </property>
       <property name="text">
        <string/>

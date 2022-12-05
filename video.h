@@ -14,6 +14,7 @@
 #include <QDialog>
 #include <QMediaPlaylist>
 #include <QSqlQuery>
+#include <QTimer>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class video;
@@ -83,7 +84,6 @@ private:
         QFormLayout *settingsLayout;
         QSlider *brightnessSlider;
 
-        void settingBtn();
 };
 
 #endif // VIDEO_H
